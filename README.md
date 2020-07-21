@@ -13,9 +13,10 @@ docker rmi [이미지ID]
 docker rmi -f [이미지ID]
 
 docker build -t [앱 명] .  도커 파일을 만든 디렉토리에서 빌드
+docker build -t stock-app .
 
 docker run -d -p 포트:포트 [앱 명] 
-ex) docker run -d -p 8080:4567 stock-app
+docker run -d -p 5000:8089 stock-app
 
 # stock
 /주가 [종목명]
