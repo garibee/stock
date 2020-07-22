@@ -52,7 +52,7 @@ app.get('/test', (req, res) => {
   });
 });
 
-app.get('/get', (req, res) => {
+app.post('/get', (req, res) => {
   // {
   //   "token" : "YE1ronbbuoZkq7h3J5KMI4Tn",
   //   "teamName" : "Toss Lab, Inc.",
@@ -71,11 +71,6 @@ app.get('/get', (req, res) => {
   const keyword = req.param('keyword');
   const createdAt = req.param('createdAt');
 
-  // const keywordString = keyword.split(" ");
-
-
-
-  
     const htmls = getHtml(code);
       
     htmls.then(html => {
