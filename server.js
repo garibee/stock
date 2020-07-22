@@ -88,12 +88,14 @@ app.post('/get', (req, res) => {
       const upDown = yesterday_per_price.children("span").eq(0);
       let isPlusMinus = "";
       let isUpDown = "";
+      let bodyTitle = "꽉 잡으세요. 웹젠 열차 출발합니다 ";
       if( upDown.hasClass("up") ){
         isUpDown = " 상승";
         isPlusMinus = "+";
       }else if( upDown.hasClass("down") ){
         isUpDown = " 하락";
         isPlusMinus = "-";
+        bodyTitle = "한강 수온 알리미 API 개발중입니다.";
       }
       
       const unit = "원"
@@ -102,26 +104,13 @@ app.post('/get', (req, res) => {
       const letter = "전일대비 "+ per_won + unit + isUpDown;
       const percentage = isPlusMinus + yesterday_per_price.next().next().find("span.blind").html()+"%";
 
-      
-      // {
-      //   "body" : "[[PizzaHouse]](http://url_to_text) You have a new Pizza order.",
-      //   "connectColor" : "#FAC11B",
-      //   "connectInfo" : [{
-      //   "title" : "Topping",
-      //   "description" : "Pepperoni"
-      //   },
-      //   {
-      //   "title": "Location",
-      //   "description": "Empire State Building, 5th Ave, New York",
-      //   }]
-      //   }
 
       const result = {
-        body: "영차 영차 개미는 (뚠뚠) 오늘도 (뚠뚠)",
-        connectColor : "#FAC11B",
+        body: bodyTitle,
+        connectColor : "#FF0000",
         connectInfo: [{
-          title: won,
-          description: letter + '</br>' + percentage
+          title: won+"(" + percentage + ")",
+          description: letter
         }],
       };
       res.send(result);
