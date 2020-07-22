@@ -2,7 +2,7 @@
 
 const express = require('express');
 
-const PORT = 8089;
+const PORT = process.env.PORT || 8089;
 const app = express();
 
 const axios = require("axios");
