@@ -52,7 +52,7 @@ app.get('/test', (req, res) => {
   });
 });
 
-app.get('/get', (req, res) => {
+app.post('/get', (req, res) => {
   // {
   //   "token" : "YE1ronbbuoZkq7h3J5KMI4Tn",
   //   "teamName" : "Toss Lab, Inc.",
