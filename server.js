@@ -52,7 +52,28 @@ app.get('/test', (req, res) => {
 });
 
 app.post('/get', (req, res) => {
-  const code = req.param('code');
+  // {
+  //   "token" : "YE1ronbbuoZkq7h3J5KMI4Tn",
+  //   "teamName" : "Toss Lab, Inc.",
+  //   "roomName" : "토스랩 코리아",
+  //   "writerName" : "김잔디",
+  //   "text" : "/날씨 내일 대전 날씨 어때?",
+  //   "keyword" : "날씨",
+  //   "createdAt" : "2017-05-15T11:34:11.266Z"
+  //   }
+  // const code = req.param('code');
+  const token = req.param('token');
+  const teamName = req.param('teamName');
+  const roomName = req.param('roomName');
+  const writerName = req.param('writerName');
+  const text = req.param('text');
+  const keyword = req.param('keyword');
+  const createdAt = req.param('createdAt');
+
+  const keywordString = keyword.split(" ");
+
+
+
   const htmls = getHtml(code);
   
 
@@ -80,15 +101,34 @@ app.post('/get', (req, res) => {
     const letter = "전일대비 "+ per_won+ unit + isUpDown;
     const percentage = isPlusMinus + yesterday_per_price.next().next().find("span.blind").html()+"%";
 
+    // const result = {
+    //   "123"  : won,
+    //   "1" : percentage,
+    //   "2" : letter
+    // };
+
+    // {
+    //   "body" : "[[PizzaHouse]](http://url_to_text) You have a new Pizza order.",
+    //   "connectColor" : "#FAC11B",
+    //   "connectInfo" : [{
+    //   "title" : "Topping",
+    //   "description" : "Pepperoni"
+    //   },
+    //   {
+    //   "title": "Location",
+    //   "description": "Empire State Building, 5th Ave, New York",
+    //   }]
+    //   }
+
     const result = {
-      "123"  : won,
-      "1" : percentage,
-      "2" : letter
+      body: ""
     };
+
     
     res.send(result);
   });
   // https://finance.naver.com/item/main.nhn?code=069080
+  // https://finance.naver.com/search/search.nhn?query=%C0%A5%C1%A8
 });
 
 const getHtml = async (code) => {
