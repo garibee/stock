@@ -52,7 +52,7 @@ app.get('/test', (req, res) => {
   });
 });
 
-app.post('/get', (req, res) => {
+app.get('/get', (req, res) => {
   // {
   //   "token" : "YE1ronbbuoZkq7h3J5KMI4Tn",
   //   "teamName" : "Toss Lab, Inc.",
@@ -88,14 +88,17 @@ app.post('/get', (req, res) => {
       const upDown = yesterday_per_price.children("span").eq(0);
       let isPlusMinus = "";
       let isUpDown = "";
-      let bodyTitle = "꽉 잡으세요. 웹젠 열차 출발합니다 ";
+      
+      
+      let color = "#C0C0C0"; // GREY
       if( upDown.hasClass("up") ){
         isUpDown = " 상승";
         isPlusMinus = "+";
+        color = "#FF0000"; //red
       }else if( upDown.hasClass("down") ){
         isUpDown = " 하락";
         isPlusMinus = "-";
-        bodyTitle = "한강 수온 알리미 API 개발중입니다.";
+        color = "#0000FF"; //blue
       }
       
       const unit = "원"
@@ -104,10 +107,41 @@ app.post('/get', (req, res) => {
       const letter = "전일대비 "+ per_won + unit + isUpDown;
       const percentage = isPlusMinus + yesterday_per_price.next().next().find("span.blind").html()+"%";
 
-
+      let bodyTitle = "";
+      if(isPlusMinus === "+" && per_won >= 1000){
+        bodyTitle = "♬오늘은 한우 오마카세 가는 날♬";
+        color = "#FF00FF"; // PURPLE
+      }else if(isPlusMinus === "+" && per_won >= 700){
+        bodyTitle = "오늘은 한우 먹는 날♬";
+        color = "#FF6670"; // PINK
+      }else if(isPlusMinus === "+" && per_won >= 500){
+        bodyTitle = "오늘은 참치 먹는 날♪♪";
+        color = "#00FF00"; // GREEN
+      }else if(isPlusMinus === "+" && per_won >= 300){
+        bodyTitle = "오늘은 삼겹살 먹는 날~";
+      }else if(isPlusMinus === "+" && per_won >= 100){
+        bodyTitle = "오늘은 돈까스 먹는 날";
+      }else if(isPlusMinus === "+" && per_won >= 0){
+        bodyTitle = "존버는 승리한다!";
+      }
+      
+      if(isPlusMinus === "-" && per_won >= 1000){
+        bodyTitle = "한강 입수 전 준비운동 철저히!";
+      }else if(isPlusMinus === "-" && per_won >= 700){
+        bodyTitle = "오른손 주먹을 쥐고, 내 머리를 세게 내려치도록 하자";
+      }else if(isPlusMinus === "-" && per_won >= 500){
+        bodyTitle = "내가 왜 이런 개잡주를 사서 고생할까...";
+      }else if(isPlusMinus === "-" && per_won >= 300){
+        bodyTitle = "더 떨어지진 않겠지...?";
+      }else if(isPlusMinus === "-" && per_won >= 100){
+        bodyTitle = "라면으로 떼우는 날";
+      }else if(isPlusMinus === "-" && per_won >= 0){
+        bodyTitle = "존버는 승리한다!";
+      }
+      
       const result = {
         body: bodyTitle,
-        connectColor : "#FF0000",
+        connectColor : color,
         connectInfo: [{
           title: won+"(" + percentage + ")",
           description: letter
