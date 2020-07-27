@@ -15,41 +15,79 @@ app.get('/', (req, res) => {
 
 app.get('/test', (req, res) => {
   const code = req.param('code');
-  const htmls = getHtml(code);
+    const htmls = getHtml(code);
+      
+    htmls.then(html => {
+      const $ = cheerio.load(html.data);
+      const current_price = $("#chart_area").children("div.rate_info").children("div.today").children("p.no_today").children("em");
+      const yesterday_per_price = $("#chart_area").children("div.rate_info").children("div.today").children("p.no_exday").children("em");
+      const company = $("div.wrap_company").children("h2").text();
+      
+      const curr_price = current_price.children("span");
+      const upDown = yesterday_per_price.children("span").eq(0);
+      let isPlusMinus = "";
+      let isUpDown = "";
+      
+      
+      let color = "#C0C0C0"; // GREY
+      if( upDown.hasClass("up") ){
+        isUpDown = " 상승";
+        isPlusMinus = "+";
+        color = "#FF0000"; //red
+      }else if( upDown.hasClass("down") ){
+        isUpDown = " 하락";
+        isPlusMinus = "-";
+        color = "#0000FF"; //blue
+      }
+      
+      const unit = "원"
+      const per_won = yesterday_per_price.find("span.blind").html().replace(",", "");
+      const won = "현재가 " + curr_price.html() + unit;
+      const letter = "전일대비 "+ per_won + unit + isUpDown;
+      const percentage = isPlusMinus + yesterday_per_price.next().next().find("span.blind").html()+"%";
 
-  htmls.then(html => {
-    let ulList = [];
-    const $ = cheerio.load(html.data);
-    const current_price = $("#chart_area").children("div.rate_info").children("div.today").children("p.no_today").children("em");
-    const yesterday_per_price = $("#chart_area").children("div.rate_info").children("div.today").children("p.no_exday").children("em");
-    
-    const curr_price = current_price.children("span");
-    const upDown = yesterday_per_price.children("span").eq(0);
-
-    let isPlusMinus = "";
-    let isUpDown = "";
-    if( upDown.hasClass("up") ){
-      isUpDown = " 상승";
-      isPlusMinus = "+";
-    }else if( upDown.hasClass("down") ){
-      isUpDown = " 하락";
-      isPlusMinus = "-";
-    }
-    const unit = "원"
-    const per_won = yesterday_per_price.find("span.blind").html();
-
-    const won = "현재가 " + curr_price.html()+unit;
-    const letter = "전일대비 "+ per_won+ unit + isUpDown;
-    const percentage = isPlusMinus + yesterday_per_price.next().next().find("span.blind").html()+"%";
-
-    const result = {
-      "123"  : won,
-      "1" : percentage,
-      "2" : letter
-    };
-    
-    res.send(result);
-  });
+      let bodyTitle = "";
+      if(isPlusMinus === "+" && per_won >= 1000){
+        bodyTitle = "♬오늘은 한우 오마카세 가는 날♬";
+        color = "#FF00FF"; // PURPLE
+      }else if(isPlusMinus === "+" && per_won >= 700){
+        bodyTitle = "오늘은 한우 먹는 날♬";
+        color = "#FF6670"; // PINK
+      }else if(isPlusMinus === "+" && per_won >= 500){
+        bodyTitle = "오늘은 참치 먹는 날♪♪";
+        color = "#00FF00"; // GREEN
+      }else if(isPlusMinus === "+" && per_won >= 300){
+        bodyTitle = "오늘은 삼겹살 먹는 날~";
+      }else if(isPlusMinus === "+" && per_won >= 100){
+        bodyTitle = "오늘은 돈까스 먹는 날";
+      }else if(isPlusMinus === "+" && per_won >= 0){
+        bodyTitle = "존버는 승리한다!";
+      }
+      
+      if(isPlusMinus === "-" && per_won >= 1000){
+        bodyTitle = "한강 입수 전 준비운동 철저히!";
+      }else if(isPlusMinus === "-" && per_won >= 700){
+        bodyTitle = "오른손 주먹을 쥐고, 내 머리를 세게 내려치도록 하자";
+      }else if(isPlusMinus === "-" && per_won >= 500){
+        bodyTitle = "내가 왜 이런 개잡주를 사서 고생할까...";
+      }else if(isPlusMinus === "-" && per_won >= 300){
+        bodyTitle = "더 떨어지진 않겠지...?";
+      }else if(isPlusMinus === "-" && per_won >= 100){
+        bodyTitle = "라면으로 떼우는 날";
+      }else if(isPlusMinus === "-" && per_won >= 0){
+        bodyTitle = "존버는 승리한다!";
+      }
+      
+      const result = {
+        body: bodyTitle,
+        connectColor : color,
+        connectInfo: [{
+          title: won+"(" + percentage + ")",
+          description: letter
+        }],
+      };
+      res.send(result);
+    });
 });
 
 app.post('/get', (req, res) => {
@@ -97,12 +135,13 @@ app.post('/get', (req, res) => {
       }
       
       const unit = "원"
-      const per_won = yesterday_per_price.find("span.blind").html();
+      const per_won = yesterday_per_price.find("span.blind").html().replace(",", "");
       const won = "현재가 " + curr_price.html() + unit;
       const letter = "전일대비 "+ per_won + unit + isUpDown;
       const percentage = isPlusMinus + yesterday_per_price.next().next().find("span.blind").html()+"%";
 
       let bodyTitle = "";
+      
       if(isPlusMinus === "+" && per_won >= 1000){
         bodyTitle = "♬오늘은 한우 오마카세 가는 날♬";
         color = "#FF00FF"; // PURPLE
