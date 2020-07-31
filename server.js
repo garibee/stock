@@ -45,8 +45,8 @@ app.get('/test', (req, res) => {
       const won = "현재가 " + curr_price.html() + unit;
       const letter = "전일대비 "+ per_won + unit + isUpDown;
       const percentage = isPlusMinus + yesterday_per_price.next().next().find("span.blind").html()+"%";
-
-      let bodyTitle = "뜨뜨 미지근~";
+ 
+      let bodyTitle = "뜨뜨 미지근~"; // 0원 상승/하락
       if(isPlusMinus === "+" && per_won >= 1000){
         bodyTitle = "♬오늘은 한우 오마카세 가는 날♬";
         color = "#FF00FF"; // PURPLE
