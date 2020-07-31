@@ -40,7 +40,7 @@ app.get('/test', (req, res) => {
         color = "#0000FF"; //blue
       }
       
-      const unit = "원"
+      const unit = "원";
       const per_won = yesterday_per_price.find("span.blind").html().replace(",", "");
       const won = "현재가 " + curr_price.html() + unit;
       const letter = "전일대비 "+ per_won + unit + isUpDown;
