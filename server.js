@@ -108,7 +108,12 @@ app.post('/get', (req, res) => {
     const keyword = req.param('keyword');
     const key = Number(keyword);
     const createdAt = req.param('createdAt');
-    
+    console.log("===========info===========");
+    console.log(req.param("keyword"));
+    console.log(typeof keyword);
+    console.log(key);
+    console.log(arr[key]);
+    console.log("===========done===========");
     const arr = [
       "069080", 
       "069080", 
