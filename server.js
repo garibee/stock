@@ -200,7 +200,7 @@ app.post('/get', (req, res) => {
       }
       
       const result = {
-        body: "["+tit[key]+"]"+bodyTitle,
+        body: "[ "+tit[key]+" ] "+bodyTitle,
         connectColor : color,
         connectInfo: [{
           title: won+"(" + percentage + ")",
