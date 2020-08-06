@@ -106,6 +106,7 @@ app.post('/get', (req, res) => {
     const writerName = req.param('writerName');
     const text = req.param('text');
     const keyword = req.param('keyword');
+    const key = Number(keyword);
     const createdAt = req.param('createdAt');
     
     const arr = [
