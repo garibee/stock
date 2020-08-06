@@ -100,20 +100,20 @@ app.post('/get', (req, res) => {
   //   "keyword" : "날씨",
   //   "createdAt" : "2017-05-15T11:34:11.266Z"
   //   }
-    const token       = req.body.param('token');
-    const teamName    = req.body.param('teamName');
-    const roomName    = req.body.param('roomName');
-    const writerName  = req.body.param('writerName');
-    const text        = req.body.param('text');
-    const keyword     = req.body.param('keyword');
-    const createdAt   = req.body.param('createdAt');
+    const token       = req.body.token;
+    const teamName    = req.body.teamName;
+    const roomName    = req.body.roomName;
+    const writerName  = req.body.writerName;
+    const text        = req.body.text;
+    const keyword     = req.body.keyword;
+    const createdAt   = req.body.createdAt;
 
     console.log("===========info===========");
-    console.log(req.body.param('teamName'));
-    console.log(req.body.param("keyword"));
-    console.log(req.body.param('text'));
-    console.log(req.body.param('writerName'));
-    console.log(req.body.param('roomName'));
+    console.log(req.body.teamName);
+    console.log(req.body.keyword);
+    console.log(req.body.text);
+    console.log(req.body.writerName);
+    console.log(req.body.roomName);
     console.log("===========done===========");
     const key = Number(keyword);
 
