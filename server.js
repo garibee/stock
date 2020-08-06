@@ -9,6 +9,10 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const Iconv =  require('iconv').Iconv;
 
+const bodyParser = require('body-parser');                                                                     
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}));
+
 app.get('/', (req, res) => {
   res.send('Hello World');
 });
