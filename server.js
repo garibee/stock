@@ -106,14 +106,17 @@ app.post('/get', (req, res) => {
     const writerName = req.param('writerName');
     const text = req.param('text');
     const keyword = req.param('keyword');
-    const key = Number(keyword);
     const createdAt = req.param('createdAt');
+
     console.log("===========info===========");
+    console.log(req.param('teamName'));
     console.log(req.param("keyword"));
-    console.log(typeof keyword);
-    console.log(key);
-    console.log(arr[key]);
+    console.log(req.param('text'));
+    console.log(req.param('writerName'));
+    console.log(req.param('roomName'));
     console.log("===========done===========");
+    const key = Number(keyword);
+    
     const arr = [
       "069080", 
       "069080", 
