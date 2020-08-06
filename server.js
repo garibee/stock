@@ -100,16 +100,29 @@ app.post('/get', (req, res) => {
   //   "keyword" : "날씨",
   //   "createdAt" : "2017-05-15T11:34:11.266Z"
   //   }
-  const code = req.param('code');
-  const token = req.param('token');
-  const teamName = req.param('teamName');
-  const roomName = req.param('roomName');
-  const writerName = req.param('writerName');
-  const text = req.param('text');
-  const keyword = req.param('keyword');
-  const createdAt = req.param('createdAt');
+    const token = req.param('token');
+    const teamName = req.param('teamName');
+    const roomName = req.param('roomName');
+    const writerName = req.param('writerName');
+    const text = req.param('text');
+    const keyword = req.param('keyword');
+    const createdAt = req.param('createdAt');
+    
+    const arr = [
+      "069080", 
+      "069080", 
+      "007700", 
+      "096530"
+    ];
+    
+    const tit = [
+      "웹젠", 
+      "웹젠", 
+      "F&F", 
+      "씨젠"
+    ];
 
-    const htmls = getHtml(code);
+    const htmls = getHtml(arr[keyword]);
       
     htmls.then(html => {
       const $ = cheerio.load(html.data);
@@ -174,7 +187,7 @@ app.post('/get', (req, res) => {
       }
       
       const result = {
-        body: bodyTitle,
+        body: "["+tit[test]+"]"+bodyTitle,
         connectColor : color,
         connectInfo: [{
           title: won+"(" + percentage + ")",
@@ -188,7 +201,6 @@ app.post('/get', (req, res) => {
 });
 
 const getHtml = async (code) => {
-  if(!code) code = "069080"; // 웹젠
   try {
     return await axios.get(
       "https://finance.naver.com/item/main.nhn?code="+code
