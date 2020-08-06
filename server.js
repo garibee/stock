@@ -90,7 +90,7 @@ app.get('/test', (req, res) => {
     });
 });
 
-app.post('/get', (req, res) => {
+app.get('/get', (req, res) => {
   // {
   //   "token" : "YE1ronbbuoZkq7h3J5KMI4Tn",
   //   "teamName" : "Toss Lab, Inc.",
@@ -116,7 +116,7 @@ app.post('/get', (req, res) => {
     console.log(req.param('roomName'));
     console.log("===========done===========");
     const key = Number(keyword);
-    
+
     const arr = [
       "069080", 
       "069080", 
@@ -196,7 +196,7 @@ app.post('/get', (req, res) => {
       }
       
       const result = {
-        body: "["+tit[test]+"]"+bodyTitle,
+        body: "["+tit[key]+"]"+bodyTitle,
         connectColor : color,
         connectInfo: [{
           title: won+"(" + percentage + ")",
