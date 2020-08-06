@@ -123,7 +123,7 @@ app.post('/get', (req, res) => {
       "씨젠"
     ];
 
-    const htmls = getHtml(arr[keyword]);
+    const htmls = getHtml(arr[key]);
       
     htmls.then(html => {
       const $ = cheerio.load(html.data);
