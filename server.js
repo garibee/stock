@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/list', (req, res) => {
-  let titles = "번호\n";
+  let titles = "";
   tit.forEach(function(ele, index){
     if(tit.length == index){
       titles += index + ". " + tit[index]
@@ -52,7 +52,7 @@ app.post('/list', (req, res) => {
     body: "현재 등록된 종목",
     connectColor : "#DF0101",
     connectInfo: [{
-      title: "====등록번호====",
+      title: "https://joseph-stock.herokuapp.com/get /번호",
       description: titles
     }],
   };
