@@ -39,8 +39,12 @@ app.get('/', (req, res) => {
 app.post('/list', (req, res) => {
   let titles = "번호\n";
   tit.forEach(function(ele, index){
-    if(index > 0){
-      titles += index + ". " + tit[index] + "\n ";
+    if(tit.length == index){
+      titles += index + ". " + tit[index]
+    }else{
+      if(index > 0){
+        titles += index + ". " + tit[index] + "\n";
+      }
     }
   });
 
