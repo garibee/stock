@@ -13,6 +13,25 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
 
+
+const arr = [
+  "069080", 
+  "069080", 
+  "007700", 
+  "096530",
+  "009410",
+  "009415"
+];
+
+const tit = [
+  "웹젠", 
+  "웹젠", 
+  "F&F", 
+  "씨젠",
+  "태영건설",
+  "태영건설우"
+];
+
 app.get('/', (req, res) => {
   res.send('Hello World');
 });
@@ -94,6 +113,25 @@ app.get('/test', (req, res) => {
     });
 });
 
+app.get('/list', (req, res) => {
+  let titles = "번호\n";
+  tit.forEach(function(ele, index){
+    if(index > 0){
+      titles += index + ". " + tit[index] + "\n ";
+    }
+  });
+
+  const result = {
+    body: "현재 등록된 종목",
+    connectColor : "#DF0101",
+    connectInfo: [{
+      title: "====등록번호====",
+      description: titles
+    }],
+  };
+  res.send(result);
+});
+
 app.post('/get', (req, res) => {
   // {
   //   "token" : "YE1ronbbuoZkq7h3J5KMI4Tn",
@@ -120,20 +158,6 @@ app.post('/get', (req, res) => {
     console.log(req.body.roomName);
     console.log("===========done===========");
     const key = Number(keyword);
-
-    const arr = [
-      "069080", 
-      "069080", 
-      "007700", 
-      "096530"
-    ];
-    
-    const tit = [
-      "웹젠", 
-      "웹젠", 
-      "F&F", 
-      "씨젠"
-    ];
 
     const htmls = getHtml(arr[key]);
       
@@ -168,16 +192,16 @@ app.post('/get', (req, res) => {
 
       let bodyTitle = "";
       
-      if(isPlusMinus === "+" && per_won >= 1000){
+      if(isPlusMinus === "+" && per_won >= 1800){
         bodyTitle = "♬오늘은 한우 오마카세 가는 날♬";
         color = "#FF00FF"; // PURPLE
-      }else if(isPlusMinus === "+" && per_won >= 700){
+      }else if(isPlusMinus === "+" && per_won >= 1200){
         bodyTitle = "오늘은 한우 먹는 날♬";
-        color = "#FF6670"; // PINK
-      }else if(isPlusMinus === "+" && per_won >= 500){
+        color = "##FF0000"; // red
+      }else if(isPlusMinus === "+" && per_won >= 800){
         bodyTitle = "오늘은 참치 먹는 날♪♪";
-        color = "#00FF00"; // GREEN
-      }else if(isPlusMinus === "+" && per_won >= 300){
+        color = "#FF6670"; // pink
+      }else if(isPlusMinus === "+" && per_won >= 500){
         bodyTitle = "오늘은 삼겹살 먹는 날~";
       }else if(isPlusMinus === "+" && per_won >= 100){
         bodyTitle = "오늘은 돈까스 먹는 날";
@@ -185,13 +209,13 @@ app.post('/get', (req, res) => {
         bodyTitle = "존버는 승리한다!";
       }
       
-      if(isPlusMinus === "-" && per_won >= 1000){
+      if(isPlusMinus === "-" && per_won >= 1800){
         bodyTitle = "한강 입수 전 준비운동 철저히!";
-      }else if(isPlusMinus === "-" && per_won >= 700){
+      }else if(isPlusMinus === "-" && per_won >= 1200){
         bodyTitle = "오른손 주먹을 쥐고, 내 머리를 세게 내려치도록 하자";
-      }else if(isPlusMinus === "-" && per_won >= 500){
+      }else if(isPlusMinus === "-" && per_won >= 800){
         bodyTitle = "내가 왜 이런 개잡주를 사서 고생할까...";
-      }else if(isPlusMinus === "-" && per_won >= 300){
+      }else if(isPlusMinus === "-" && per_won >= 500){
         bodyTitle = "더 떨어지진 않겠지...?";
       }else if(isPlusMinus === "-" && per_won >= 100){
         bodyTitle = "라면으로 떼우는 날";
